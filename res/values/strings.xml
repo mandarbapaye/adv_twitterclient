@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">twittering</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_label">twittering</string>
+    <string name="title_activity_timeline">Home</string>
+    <string name="full_name_label">Full Name</string>
+    <string name="foo_label">\@foo</string>
+    <string name="tweet_text_label">This is tweet text</string>
+    <string name="fourd_label">4d</string>
+    <string name="compose_label">Compose Tweet</string>
+    <string name="char_count_label">140</string>
+    <string name="compose_tweet_label">Compose Tweet</string>
+    <string name="title_activity_detail_view">Tweet</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="detail_tweet_label">Detail Tweet body</string>
+    <string name="detail_createdat_label">10:10 PM Jun 12</string>
+    <string name="detail_retweet_count_label">200</string>
+    <string name="detail_retweet_label">RETWEETS</string>
+    <string name="detail_fav_count_label">404</string>
+    <string name="detail_fav_label">FAVORITES</string>
+</resources>
