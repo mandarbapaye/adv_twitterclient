@@ -8,6 +8,7 @@ import android.net.Uri;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 /*
@@ -67,14 +68,24 @@ public class TwitterRestClient extends OAuthBaseClient {
     	client.post(apiUrl, params, handler);
     }
 
-    // CHANGE THIS
-    // DEFINE METHODS for different API endpoints here
-//    public void getInterestingnessList(AsyncHttpResponseHandler handler) {
-//        String apiUrl = getApiUrl("?nojsoncallback=1&method=flickr.interestingness.getList");
-//        // Can specify query string params directly or through RequestParams.
-//        RequestParams params = new RequestParams();
-//        params.put("format", "json");
-//        client.get(apiUrl, params, handler);
-//    }
+    public void getMentionsTimeline(long maxId, AsyncHttpResponseHandler handler) {
+    	String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+    	RequestParams params = new RequestParams();
+    	params.put("count", "8");
+    	
+    	if (maxId > 0) {
+    		params.put("max_id", String.valueOf(maxId));
+    	}
+    	
+    	client.get(apiUrl, params, handler);
+    }
+    
+    public void getNewerMentionsTweets(long sinceId, AsyncHttpResponseHandler handler) {
+    	String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+    	RequestParams params = new RequestParams();
+    	params.put("since_id", String.valueOf(sinceId));
+    	client.get(apiUrl, params, handler);
+    }
+
     
 }

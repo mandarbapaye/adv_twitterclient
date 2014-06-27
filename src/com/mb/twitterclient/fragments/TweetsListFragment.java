@@ -47,7 +47,7 @@ public class TweetsListFragment extends Fragment {
 		lvTweets = (PullToRefreshListView) fragmentTweetsView.findViewById(R.id.lvTweets);
 		lvTweets.setAdapter(tweetsAdapter);
 		setupHandlers();
-		loadTweets();
+		//loadTweets();
 		return fragmentTweetsView;
 	}
 	
