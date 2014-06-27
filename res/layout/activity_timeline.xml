@@ -4,13 +4,14 @@
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}" >
 
-    <eu.erikw.PullToRefreshListView
-        android:id="@+id/lvTweets"
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/flTimelineFragmentContainer"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentBottom="true" >
+    </FrameLayout>
 
 </RelativeLayout>

@@ -15,17 +15,25 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
-    </style>
-    
-    <style name="AppTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-       <item name="android:background">#3399FF</item>
-	   <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
+		<item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+    	<!-- <item name="android:actionBarTabBarStyle">@style/ActionBarTabBarStyle</item>-->        
     </style>
 
-    <!-- ActionBar title text -->
-    <style name="MyActionBarTitleText"
-           parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+    <style name="AppTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#3399FF</item>
+        <item name="android:titleTextStyle">@style/ActionBarTitleText</item>
+    </style>
+    
+        <!-- ActionBar title text -->
+    <style name="ActionBarTitleText" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@android:color/white</item>
-    </style>    
+    </style>
+    
+
+    <style name="ActionBarTabStyle" parent="android:style/Widget.Holo.Light.ActionBar.TabBar">
+        <item name="android:background">@drawable/action_bar_tab_selector</item>
+        <item name="android:paddingLeft">32dp</item>
+        <item name="android:paddingRight">32dp</item>
+    </style>
 
 </resources>
