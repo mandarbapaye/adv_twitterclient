@@ -86,6 +86,37 @@ public class TwitterRestClient extends OAuthBaseClient {
     	params.put("since_id", String.valueOf(sinceId));
     	client.get(apiUrl, params, handler);
     }
-
+    
+    public void getProfileInfo(long userId, AsyncHttpResponseHandler handler) {
+    	if (userId < 0) {
+    		client.get(getApiUrl("account/verify_credentials.json"), handler);
+    	} else {
+    		String apiUrl = getApiUrl("account/verify_credentials.json");
+    		RequestParams params = new RequestParams();
+    		params.put("user_id", String.valueOf(userId));
+    		client.get(apiUrl, params, handler);
+    		
+    	}
+    }
+    
+    public void getUserTweets(long userId, long maxId, AsyncHttpResponseHandler handler) {
+    	String apiUrl = getApiUrl("statuses/user_timeline.json");
+    	RequestParams params = new RequestParams();
+    	params.put("user_id", String.valueOf(userId));
+    	
+    	if (maxId > 0) {
+    		params.put("max_id", String.valueOf(maxId));
+    	}
+    	
+    	client.get(apiUrl, params, handler);
+    }
+    
+    public void getNewerUserTweets(long userId, long sinceId, AsyncHttpResponseHandler handler) {
+    	String apiUrl = getApiUrl("statuses/user_timeline.json");
+    	RequestParams params = new RequestParams();
+    	params.put("user_id", String.valueOf(userId));
+    	params.put("since_id", String.valueOf(sinceId));
+    	client.get(apiUrl, params, handler);
+    }
     
 }

@@ -10,6 +10,7 @@
     <string name="tweet_text_label">This is tweet text</string>
     <string name="fourd_label">4d</string>
     <string name="compose_label">Compose Tweet</string>
+    <string name="profile_label">Me</string>
     <string name="char_count_label">140</string>
     <string name="compose_tweet_label">Compose Tweet</string>
     <string name="title_activity_detail_view">Tweet</string>
@@ -20,4 +21,12 @@
     <string name="detail_retweet_label">RETWEETS</string>
     <string name="detail_fav_count_label">404</string>
     <string name="detail_fav_label">FAVORITES</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="profile_follower_count_label">10</string>
+    <string name="profile_follower_label">Followers</string>
+    <string name="profile_following_count_label">20</string>
+    <string name="profile_following_label">Following</string>
+    <string name="tagline_label">tagline goes here</string>
+    
+
 </resources>

@@ -1,12 +1,10 @@
 package com.mb.twitterclient.fragments;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mb.twitterclient.models.Tweet;

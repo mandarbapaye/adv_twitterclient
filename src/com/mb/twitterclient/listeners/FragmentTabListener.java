@@ -8,11 +8,11 @@ import android.support.v4.app.FragmentTransaction;
  
 public class FragmentTabListener<T extends Fragment> implements TabListener {
 	
-    private Fragment mFragment;
-	private final FragmentActivity mActivity;
-	private final String mTag;
-	private final Class<T> mClass;
-	private final int mfragmentContainerId;
+    protected Fragment mFragment;
+    protected final FragmentActivity mActivity;
+    protected final String mTag;
+    protected final Class<T> mClass;
+    protected final int mfragmentContainerId;
         
         // This version defaults to replacing the entire activity content area
         // new FragmentTabListener<SomeFragment>(this, "first", SomeFragment.class))
@@ -60,5 +60,9 @@ public class FragmentTabListener<T extends Fragment> implements TabListener {
  
 	public void onTabReselected(Tab tab, android.app.FragmentTransaction ft) {
 		// User selected the already selected tab. Usually do nothing.
+	}
+	
+	public Fragment getFragment() {
+		return mFragment;
 	}
 }
