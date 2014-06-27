@@ -8,15 +8,17 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mb.twitterclient.ProfileActivity;
 import com.mb.twitterclient.R;
 import com.mb.twitterclient.models.Tweet;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,7 +31,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Tweet tweet = getItem(position);
+		final Tweet tweet = getItem(position);
 
 		View v;
 		if (convertView != null) {
@@ -52,6 +54,15 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 		tvName.setText(tweet.getUser().getName());
 		tvScreenName.setText("@" + tweet.getUser().getScreenName());
 		tvTimeAgo.setText(getRelativeTimeAgo(tweet.getCreatedAt()));
+		
+		ivProfileImg.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent profileIntent = new Intent(getContext(), ProfileActivity.class);
+				profileIntent.putExtra("userId", tweet.getUser().getUserId());
+				getContext().startActivity(profileIntent);
+			}
+		});
 
 		return v;
 	}

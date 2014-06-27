@@ -88,10 +88,10 @@ public class TwitterRestClient extends OAuthBaseClient {
     }
     
     public void getProfileInfo(long userId, AsyncHttpResponseHandler handler) {
-    	if (userId < 0) {
+    	if (userId <= 0) {
     		client.get(getApiUrl("account/verify_credentials.json"), handler);
     	} else {
-    		String apiUrl = getApiUrl("account/verify_credentials.json");
+    		String apiUrl = getApiUrl("users/show.json");
     		RequestParams params = new RequestParams();
     		params.put("user_id", String.valueOf(userId));
     		client.get(apiUrl, params, handler);
