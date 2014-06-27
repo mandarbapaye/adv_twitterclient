@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mb.twitterclient.fragments.ProfileFragment;
+import com.mb.twitterclient.fragments.UserTweetsFragment;
 import com.mb.twitterclient.models.User;
 
 public class ProfileActivity extends FragmentActivity {
@@ -36,6 +37,12 @@ public class ProfileActivity extends FragmentActivity {
 				FragmentTransaction frX = getSupportFragmentManager().beginTransaction();
 				frX.replace(R.id.flProfileFragmentContainer, profileFragment);
 				frX.commit();
+				
+				UserTweetsFragment userTweetsFragment = UserTweetsFragment.newInstance(user.getUserId());
+				frX = getSupportFragmentManager().beginTransaction();
+				frX.replace(R.id.flUserTweetsFragmentContainer, userTweetsFragment);
+				frX.commit();
+
 			}
 		});
 	}
