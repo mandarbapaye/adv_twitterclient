@@ -16,17 +16,17 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
 		<item name="android:actionBarTabStyle">@style/AppTheme.ActionBarTabStyle</item>
-    	<!-- <item name="android:actionBarTabBarStyle">@style/ActionBarTabBarStyle</item>-->        
+		<item name="android:actionBarTabTextStyle">@style/AppTheme.ActionBarTabTextStyle</item>
     </style>
 
     <style name="AppTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">#3399FF</item>
+        <item name="android:background">@color/twitter_blue</item>
         <item name="android:titleTextStyle">@style/AppTheme.ActionBarTitleText</item>
     </style>
     
         <!-- ActionBar title text -->
     <style name="AppTheme.ActionBarTitleText" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/twitter_white</item>
     </style>
     
 
@@ -35,5 +35,11 @@
         <item name="android:paddingLeft">32dp</item>
         <item name="android:paddingRight">32dp</item>
     </style>
+    
+    <style name="AppTheme.ActionBarTabTextStyle">
+        <item name="android:textColor">@color/twitter_blue</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    
 
 </resources>

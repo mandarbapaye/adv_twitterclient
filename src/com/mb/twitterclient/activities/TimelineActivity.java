@@ -51,7 +51,7 @@ public class TimelineActivity extends FragmentActivity implements OnTweetCompose
         Tab homeTab = actionBar
             .newTab()
             .setText("Home")
-            .setIcon(R.drawable.ic_home)
+            .setIcon(R.drawable.ic_ab_home)
             .setTag("HomeTimelineTweetsFragment")
             .setTabListener(
                 new FragmentTabListener<HomeTimelineTweetsFragment>(R.id.flTimelineFragmentContainer, this, "homeFrag", HomeTimelineTweetsFragment.class));
@@ -62,7 +62,7 @@ public class TimelineActivity extends FragmentActivity implements OnTweetCompose
         Tab mentionsTab = actionBar
             .newTab()
             .setText("Mentions")
-            .setIcon(R.drawable.ic_mentions)
+            .setIcon(R.drawable.ic_ab_mentions)
             .setTag("MentionsTweetsFragment")
             .setTabListener(
             		new FragmentTabListener<MentionsTweetsFragment>(R.id.flTimelineFragmentContainer, this, "homeFrag", MentionsTweetsFragment.class));
