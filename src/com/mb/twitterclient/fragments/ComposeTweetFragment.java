@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -67,7 +68,9 @@ public class ComposeTweetFragment extends DialogFragment {
             }
         });
         
-        return alertDialogBuilder.create();
+        AlertDialog dialog = alertDialogBuilder.create();
+//        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
 	}
 
 	@Override

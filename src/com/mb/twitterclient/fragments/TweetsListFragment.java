@@ -83,6 +83,14 @@ public class TweetsListFragment extends Fragment {
 	protected void loadTweets() {
 	}
 	
+	protected void showProgressBar() {
+		getActivity().setProgressBarIndeterminateVisibility(true);
+	}
+	
+	protected void hideProgressBar() {
+		getActivity().setProgressBarIndeterminateVisibility(false);
+	}
+	
 	void saveToDatabase(ArrayList<Tweet> tweetsList) {
 		new DBCommitTask().execute(tweetsList.toArray(new Tweet[0]));
 	}

@@ -32,7 +32,7 @@ public class DetailViewActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail_view);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+//		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		ivDetailImage = (ImageView) findViewById(R.id.ivDetailImage);
 		tvDetailName = (TextView) findViewById(R.id.tvDetailName);

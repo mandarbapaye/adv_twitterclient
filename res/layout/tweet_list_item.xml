@@ -64,5 +64,56 @@
         android:autoLink="all"
         android:textAppearance="?android:attr/textAppearanceSmall" 
         android:layout_margin="2dp"/>
+    
+    <LinearLayout
+        	android:id="@+id/llTweetOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTweet"
+            android:layout_margin="5dp"
+            android:layout_centerHorizontal="true">
+
+            
+    	<ImageView
+        	android:id="@+id/ivTweetReply"
+        	android:layout_width="20dp"
+        	android:layout_height="20dp"
+        	android:src="@drawable/ic_comment"/>
+    	
+    	<ImageView
+        	android:id="@+id/ivTweetRetweet"
+        	android:layout_width="20dp"
+        	android:layout_height="20dp"
+        	android:layout_marginLeft="50dp"
+        	android:src="@drawable/ic_tweet_retweet"/>
+
+    	<TextView
+            android:id="@+id/tvTweetRetweet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_retweet_count_label"
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"
+            android:fontFamily="sans-serif-light"/>
+    		
+    	<ImageView
+        	android:id="@+id/ivTweetFavorite"
+        	android:layout_width="20dp"
+        	android:layout_height="20dp"
+        	android:layout_marginLeft="50dp"
+        	android:src="@drawable/ic_tweet_fav"/>
+    	
+        <TextView
+            android:id="@+id/tvTweetFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_fav_count_label"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif"/>
+        
+        
+	</LinearLayout>
+    
 
 </RelativeLayout>

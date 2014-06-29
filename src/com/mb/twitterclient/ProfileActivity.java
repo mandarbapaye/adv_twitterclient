@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Window;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mb.twitterclient.fragments.ProfileFragment;
@@ -18,7 +19,9 @@ public class ProfileActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_profile);
+		 
 		twitterClient = TwitterApplication.getRestClient();
 		
 		Bundle bundle = getIntent().getExtras();

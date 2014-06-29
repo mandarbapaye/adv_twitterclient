@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mb.twitterclient.ProfileActivity;
@@ -31,6 +32,7 @@ public class TimelineActivity extends FragmentActivity implements OnTweetCompose
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); 
 		restClient = TwitterApplication.getRestClient();
 		setContentView(R.layout.activity_timeline);
 		setupTabs();

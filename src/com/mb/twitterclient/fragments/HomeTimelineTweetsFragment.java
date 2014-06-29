@@ -31,6 +31,7 @@ public class HomeTimelineTweetsFragment extends TweetsListFragment {
 			return;
 		}
 		
+		showProgressBar();
 		restClient.getTimeline(maxId, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray tweets) {
@@ -51,6 +52,12 @@ public class HomeTimelineTweetsFragment extends TweetsListFragment {
 			public void onFailure(Throwable e, String str) {
 				Log.d("error", e.getMessage());
 			}
+			
+			@Override
+			public void onFinish() {
+				hideProgressBar();
+				super.onFinish();
+			}
 		});
 	}
 	
@@ -59,6 +66,7 @@ public class HomeTimelineTweetsFragment extends TweetsListFragment {
 			lvTweets.onRefreshComplete();
 		} else {
 			long sinceId = tweetsAdapter.getItem(0).getTweetId();
+			showProgressBar();
 			restClient.getNewerTweets(sinceId, new JsonHttpResponseHandler() {
 				@Override
 				public void onSuccess(JSONArray tweets) {
@@ -90,6 +98,7 @@ public class HomeTimelineTweetsFragment extends TweetsListFragment {
 				@Override
 				public void onFinish() {
 					lvTweets.onRefreshComplete();
+					hideProgressBar();
 					super.onFinish();
 				}
 			});

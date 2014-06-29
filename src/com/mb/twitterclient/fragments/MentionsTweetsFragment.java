@@ -29,6 +29,7 @@ public class MentionsTweetsFragment extends TweetsListFragment {
 			return;
 		}
 		
+		showProgressBar();
 		restClient.getMentionsTimeline(maxId, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray tweets) {
@@ -49,6 +50,13 @@ public class MentionsTweetsFragment extends TweetsListFragment {
 			public void onFailure(Throwable e, String str) {
 				Log.d("error", e.getMessage());
 			}
+			
+			@Override
+			public void onFinish() {
+				hideProgressBar();
+				super.onFinish();
+			}
+			
 		});
 	}
 	
@@ -57,6 +65,7 @@ public class MentionsTweetsFragment extends TweetsListFragment {
 			lvTweets.onRefreshComplete();
 		} else {
 			long sinceId = tweetsAdapter.getItem(0).getTweetId();
+			showProgressBar();
 			restClient.getNewerMentionsTweets(sinceId, new JsonHttpResponseHandler() {
 				@Override
 				public void onSuccess(JSONArray tweets) {
@@ -87,6 +96,7 @@ public class MentionsTweetsFragment extends TweetsListFragment {
 				
 				@Override
 				public void onFinish() {
+					hideProgressBar();
 					lvTweets.onRefreshComplete();
 					super.onFinish();
 				}

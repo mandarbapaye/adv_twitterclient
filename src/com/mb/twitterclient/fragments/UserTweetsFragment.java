@@ -48,6 +48,7 @@ public class UserTweetsFragment extends TweetsListFragment {
 			return;
 		}
 		
+		showProgressBar();
 		restClient.getUserTweets(this.userId, maxId, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONArray tweets) {
@@ -68,6 +69,12 @@ public class UserTweetsFragment extends TweetsListFragment {
 			public void onFailure(Throwable e, String str) {
 				Log.d("error", e.getMessage());
 			}
+			
+			@Override
+			public void onFinish() {
+				hideProgressBar();
+				super.onFinish();
+			}
 		});
 	}
 	
@@ -76,6 +83,7 @@ public class UserTweetsFragment extends TweetsListFragment {
 			lvTweets.onRefreshComplete();
 		} else {
 			long sinceId = tweetsAdapter.getItem(0).getTweetId();
+			showProgressBar();
 			restClient.getNewerUserTweets(this.userId, sinceId, new JsonHttpResponseHandler() {
 				@Override
 				public void onSuccess(JSONArray tweets) {
@@ -103,6 +111,7 @@ public class UserTweetsFragment extends TweetsListFragment {
 				
 				@Override
 				public void onFinish() {
+					hideProgressBar();
 					lvTweets.onRefreshComplete();
 					super.onFinish();
 				}

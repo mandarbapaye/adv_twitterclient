@@ -35,6 +35,12 @@ public class Tweet extends Model implements Serializable {
 	@Column(name="FavCount")
 	private long favCount;
 	
+	@Column(name="Favorited")
+	private boolean favorited;
+	
+	@Column(name="Retweeted")
+	private boolean retweeted;
+	
 	public Tweet() {
 		super();
 	}
@@ -63,6 +69,23 @@ public class Tweet extends Model implements Serializable {
 		return favCount;
 	}
 	
+	public boolean isFavorited() {
+		return favorited;
+	}
+	
+	public void setFavorited(boolean favorited) {
+		this.favorited = favorited;
+	}
+	
+	public boolean isRetweeted() {
+		return retweeted;
+	}
+
+	public void setRetweeted(boolean retweeted) {
+		this.retweeted = retweeted;
+	}
+
+	
 	public static Tweet fromJSON(JSONObject json) {
 		Tweet tweet = new Tweet();
 		try {
@@ -72,6 +95,8 @@ public class Tweet extends Model implements Serializable {
 			tweet.retweetCount = json.getLong("retweet_count");
 			tweet.favCount = json.getLong("favorite_count");
 			tweet.user = User.fromJSON(json.getJSONObject("user"));
+			tweet.favorited = json.getBoolean("favorited");
+			tweet.retweeted = json.getBoolean("retweeted");
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
