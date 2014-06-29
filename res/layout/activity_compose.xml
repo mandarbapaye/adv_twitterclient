@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${packageName}.${activityClass}" >
+
+    <RelativeLayout
+        android:id="@+id/rlUserInfo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="7dp"
+        tools:context="${packageName}.${activityClass}" >
+
+        <ImageView
+            android:id="@+id/ivNewTweetImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tvNewTweetName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/ivNewTweetImage"
+            android:fontFamily="sans-serif-bold"
+            android:text="@string/full_name_label"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvNewTweetScreenName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvNewTweetName"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/ivNewTweetImage"
+            android:fontFamily="sans-serif"
+            android:text="@string/foo_label"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tvNewTweetScreenName"
+            android:gravity="right">
+
+            <TextView
+                android:id="@+id/tvTweetCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5dp"
+                android:gravity="bottom"
+                android:fontFamily="sans-serif-bold"
+                android:text="@string/char_count_label"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/darker_gray"/>
+            
+            <Button
+                android:id="@+id/btnNewTweet"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:text="Tweet"
+                android:textColor="@android:color/white"
+                android:textSize="8sp"
+                android:textAllCaps="true"
+                android:onClick="sendTweet"
+                android:background="@drawable/tweet_button_selector"/>
+        </LinearLayout>
+        
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/etComposeTweet"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:cursorVisible="true"
+        android:layout_weight="1"
+        android:gravity="top"
+        android:hint="What&apos;s happening?"
+        android:maxLength="140" />
+
+</LinearLayout>

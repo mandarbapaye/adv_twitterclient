@@ -20,14 +20,23 @@ public class ComposeTweetFragment extends DialogFragment {
 	
 	EditText etNewTweet;
 	TextView tvCharCount;
+	String replyToAuthor;
 	
 	OnTweetComposedListener listener;
 	
-	public static ComposeTweetFragment newInstance() {
+	public static ComposeTweetFragment newInstance(String replyToAuthor) {
 		ComposeTweetFragment composeTweetFragment = new ComposeTweetFragment();
+		Bundle args = new Bundle();
+		args.putString("author", replyToAuthor);
+		composeTweetFragment.setArguments(args);
 		return composeTweetFragment;
 	}
 	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.replyToAuthor = getArguments().getString("author");
+	}
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -52,8 +61,11 @@ public class ComposeTweetFragment extends DialogFragment {
 			}
 		});
 		
+		if (this.replyToAuthor != null) {
+			etNewTweet.setText(this.replyToAuthor);
+		}
+		
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-		alertDialogBuilder.setView(v);
 		alertDialogBuilder.setTitle(R.string.compose_tweet_label);
         alertDialogBuilder.setPositiveButton("Tweet",  new DialogInterface.OnClickListener() {
             @Override
@@ -67,9 +79,9 @@ public class ComposeTweetFragment extends DialogFragment {
                 dialog.dismiss();
             }
         });
-        
         AlertDialog dialog = alertDialogBuilder.create();
-//        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		dialog.setView(v);
         return dialog;
 	}
 

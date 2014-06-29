@@ -19,9 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.mb.twitterclient.ComposeActivity;
 import com.mb.twitterclient.ProfileActivity;
 import com.mb.twitterclient.R;
 import com.mb.twitterclient.TwitterApplication;
+import com.mb.twitterclient.fragments.ComposeTweetFragment;
 import com.mb.twitterclient.models.Tweet;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -52,6 +54,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 		final TextView tvTweetFavorite = (TextView) v.findViewById(R.id.tvTweetFavorite);
 		final ImageView ivTweetFavorite = (ImageView) v.findViewById(R.id.ivTweetFavorite);
 		final ImageView ivTweetRetweet = (ImageView) v.findViewById(R.id.ivTweetRetweet);
+		ImageView ivTweetReply = (ImageView) v.findViewById(R.id.ivTweetReply);
 				
 		ivProfileImg.setImageResource(android.R.color.transparent);
 		ImageLoader imageLoader = ImageLoader.getInstance();
@@ -95,6 +98,15 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 					TwitterApplication.getRestClient().retweet(tweet.getTweetId(), new JsonHttpResponseHandler() {
 					});
 				}
+			}
+		});
+		
+		ivTweetReply.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getContext(), ComposeActivity.class);
+				i.putExtra("replyTo", tweet.getUser().getScreenName());
+				getContext().startActivity(i);
 			}
 		});
 

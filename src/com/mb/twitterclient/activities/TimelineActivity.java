@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.mb.twitterclient.ComposeActivity;
 import com.mb.twitterclient.ProfileActivity;
 import com.mb.twitterclient.R;
 import com.mb.twitterclient.TwitterApplication;
@@ -74,14 +75,16 @@ public class TimelineActivity extends FragmentActivity implements OnTweetCompose
 
 	
 	public void onComposeClicked() {
-		ComposeTweetFragment composeTweetFragment = ComposeTweetFragment.newInstance();
-		composeTweetFragment.show(getFragmentManager(), "ComposeTweet");
+//		ComposeTweetFragment composeTweetFragment = ComposeTweetFragment.newInstance(null);
+//		composeTweetFragment.show(getFragmentManager(), "ComposeTweet");
+		Intent i = new Intent(this, ComposeActivity.class);
+		startActivity(i);
 	}
 	
 	public void onProfileClicked() {
 		Intent profileIntent = new Intent(this, ProfileActivity.class);
 		profileIntent.putExtra("userId", -1);
-		startActivity(profileIntent);
+		startActivityForResult(profileIntent, 20);
 	}
 	
 	@Override
@@ -99,7 +102,7 @@ public class TimelineActivity extends FragmentActivity implements OnTweetCompose
 	}
 	
 	public void onTweetComposed(String tweetText) {
-		restClient.postNewTweet(tweetText, new JsonHttpResponseHandler() {
+		restClient.postNewTweet(tweetText, null, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject tweetJson) {
 				// below approach may not be correct as some other

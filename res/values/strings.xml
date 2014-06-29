@@ -27,6 +27,6 @@
     <string name="profile_following_count_label">20</string>
     <string name="profile_following_label">Following</string>
     <string name="tagline_label">tagline goes here</string>
-    
+    <string name="title_activity_compose">Compose</string>
 
 </resources>

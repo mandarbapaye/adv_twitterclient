@@ -1,5 +1,7 @@
 package com.mb.twitterclient.activities;
 
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,10 +9,13 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.codepath.oauth.OAuthLoginActivity;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mb.twitterclient.R;
+import com.mb.twitterclient.TwitterApplication;
 import com.mb.twitterclient.TwitterRestClient;
 import com.mb.twitterclient.R.layout;
 import com.mb.twitterclient.R.menu;
+import com.mb.twitterclient.models.User;
 import com.mb.twitterclient.util.Util;
 
 public class LoginActivity extends OAuthLoginActivity<TwitterRestClient> {
@@ -33,6 +38,14 @@ public class LoginActivity extends OAuthLoginActivity<TwitterRestClient> {
 	// i.e Display application "homepage"
     @Override
     public void onLoginSuccess() {
+    	 TwitterApplication.getRestClient().getProfileInfo(-1, new JsonHttpResponseHandler() {
+     		@Override
+     		public void onSuccess(JSONObject userJson) {
+     			User user = User.fromJSON(userJson);
+     			TwitterApplication.setAccountHolder(user);
+     	 	}
+     	 });
+    	
     	 Intent i = new Intent(this, TimelineActivity.class);
     	 startActivity(i);
     }
