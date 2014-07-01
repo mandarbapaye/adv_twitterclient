@@ -27,7 +27,7 @@ import com.mb.twitterclient.util.Constants;
 import eu.erikw.PullToRefreshListView;
 import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
-public class TweetsListFragment extends Fragment implements TweetAdapter.OnTweetReplyInitiated {
+public class TweetsListFragment extends Fragment implements TweetAdapter.OnTweetReplyListener {
 	
 	TwitterRestClient restClient;
 	
@@ -40,7 +40,7 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.OnTweet
 		super.onCreate(savedInstanceState);
 		restClient = TwitterApplication.getRestClient();
 		tweetsList = new ArrayList<Tweet>();
-		tweetsAdapter = new TweetAdapter(getActivity(), tweetsList);
+		tweetsAdapter = new TweetAdapter(getActivity(), tweetsList, this);
 	}
 
 	@Override
@@ -135,6 +135,9 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.OnTweet
 	
 	public void replyToTweet(Tweet tweet) {
 		Intent i = new Intent(getActivity(), ComposeActivity.class);
+		if (tweet != null) {
+			i.putExtra("replyTo", tweet.getUser().getScreenName());
+		}
 		startActivityForResult(i, Constants.TWEET_REPLY_FROM_FRAGMENT);
 	}
 	
@@ -148,13 +151,8 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.OnTweet
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == Constants.TWEET_REPLY_FROM_FRAGMENT &&
 			resultCode == Activity.RESULT_OK) {
-//			Tweet newTweet = (Tweet) data.getExtras().get(Constants.NEW_TWEET);
-//			if (newTweet != null && updateListWithTweet(newTweet)) {
-//				tweetsAdapter.insert(newTweet, 0);
-//				tweetsAdapter.notifyDataSetChanged();
-//				lvTweets.smoothScrollToPosition(0);
-//			}
 			loadNewerTweets();
+			lvTweets.smoothScrollToPosition(0);
 		}
 	}
 	

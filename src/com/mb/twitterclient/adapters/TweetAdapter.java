@@ -29,12 +29,15 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class TweetAdapter extends ArrayAdapter<Tweet> {
 	
-	public interface OnTweetReplyInitiated {
+	OnTweetReplyListener listener;
+	
+	public interface OnTweetReplyListener {
 		public void replyToTweet(Tweet tweet);
 	}
 
-	public TweetAdapter(Context context, List<Tweet> tweets) {
+	public TweetAdapter(Context context, List<Tweet> tweets, OnTweetReplyListener replyListener) {
 		super(context, 0, tweets);
+		listener = replyListener;
 	}
 	
 	@Override
@@ -108,9 +111,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 		ivTweetReply.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(getContext(), ComposeActivity.class);
-				i.putExtra("replyTo", tweet.getUser().getScreenName());
-				getContext().startActivity(i);
+				listener.replyToTweet(tweet);
 			}
 		});
 

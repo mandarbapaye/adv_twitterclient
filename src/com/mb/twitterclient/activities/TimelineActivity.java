@@ -1,41 +1,32 @@
 package com.mb.twitterclient.activities;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.Toast;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.mb.twitterclient.ComposeActivity;
 import com.mb.twitterclient.ProfileActivity;
 import com.mb.twitterclient.R;
 import com.mb.twitterclient.TwitterApplication;
 import com.mb.twitterclient.TwitterRestClient;
-import com.mb.twitterclient.fragments.ComposeTweetFragment.OnTweetComposedListener;
 import com.mb.twitterclient.fragments.HomeTimelineTweetsFragment;
 import com.mb.twitterclient.fragments.MentionsTweetsFragment;
 import com.mb.twitterclient.fragments.TweetsListFragment;
 import com.mb.twitterclient.listeners.FragmentTabListener;
-import com.mb.twitterclient.models.Tweet;
-import com.mb.twitterclient.util.Constants;
 import com.mb.twitterclient.util.Util;
 
-public class TimelineActivity extends FragmentActivity implements OnTweetComposedListener {
+public class TimelineActivity extends FragmentActivity {
 	
 	TwitterRestClient restClient;
 	Tab homeTab, mentionsTab;
-	Map<String, FragmentTabListener<? extends TweetsListFragment>> tabListener; 
+	Map<String, FragmentTabListener<? extends TweetsListFragment>> tabListeners; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +34,8 @@ public class TimelineActivity extends FragmentActivity implements OnTweetCompose
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); 
 		restClient = TwitterApplication.getRestClient();
 		setContentView(R.layout.activity_timeline);
+		
+		tabListeners = new HashMap<String, FragmentTabListener<? extends TweetsListFragment>>();
 		setupTabs();
 	}
 	
@@ -57,14 +50,20 @@ public class TimelineActivity extends FragmentActivity implements OnTweetCompose
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayShowTitleEnabled(true);
+        
+        FragmentTabListener<HomeTimelineTweetsFragment> homeTabListener =
+        		new FragmentTabListener<HomeTimelineTweetsFragment>(R.id.flTimelineFragmentContainer, this, "homeFrag", HomeTimelineTweetsFragment.class);
+        
+        FragmentTabListener<MentionsTweetsFragment> mentionsTabListener =
+        		new FragmentTabListener<MentionsTweetsFragment>(R.id.flTimelineFragmentContainer, this, "mentionsFrag", MentionsTweetsFragment.class);
+        
 
         Tab homeTab = actionBar
             .newTab()
             .setText("Home")
             .setIcon(R.drawable.ic_ab_home)
             .setTag("HomeTimelineTweetsFragment")
-            .setTabListener(
-                new FragmentTabListener<HomeTimelineTweetsFragment>(R.id.flTimelineFragmentContainer, this, "homeFrag", HomeTimelineTweetsFragment.class));
+            .setTabListener(homeTabListener);
 
         actionBar.addTab(homeTab);
         actionBar.selectTab(homeTab);
@@ -74,33 +73,17 @@ public class TimelineActivity extends FragmentActivity implements OnTweetCompose
             .setText("Mentions")
             .setIcon(R.drawable.ic_ab_mentions)
             .setTag("MentionsTweetsFragment")
-            .setTabListener(
-            		new FragmentTabListener<MentionsTweetsFragment>(R.id.flTimelineFragmentContainer, this, "homeFrag", MentionsTweetsFragment.class));
+            .setTabListener(mentionsTabListener);
         
         actionBar.addTab(mentionsTab);
+        tabListeners.put("home", homeTabListener);
+        tabListeners.put("mentions", mentionsTabListener);
     }
 
 	
 	public void onComposeClicked() {
-//		ComposeTweetFragment composeTweetFragment = ComposeTweetFragment.newInstance(null);
-//		composeTweetFragment.show(getFragmentManager(), "ComposeTweet");
-		Intent i = new Intent(this, ComposeActivity.class);
-		startActivityForResult(i, Constants.TWEET_REPLY_FROM_ACTIONBAR);
-	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == Constants.TWEET_REPLY_FROM_ACTIONBAR &&
-			resultCode == Activity.RESULT_OK) {
-			Tweet newTweet = (Tweet) data.getExtras().get(Constants.NEW_TWEET);
-			if (newTweet != null) {
-				Toast.makeText(this, "New Tweet: " + newTweet.getBody(), Toast.LENGTH_LONG).show();
-			
-//				tweetsAdapter.insert(newTweet, 0);
-//				tweetsAdapter.notifyDataSetChanged();
-//				lvTweets.smoothScrollToPosition(0);
-			}
-		}
+		HomeTimelineTweetsFragment homeFragment = (HomeTimelineTweetsFragment) tabListeners.get("home").getFragment();
+		homeFragment.replyToTweet(null);
 	}
 	
 	public void onProfileClicked() {
@@ -121,25 +104,6 @@ public class TimelineActivity extends FragmentActivity implements OnTweetCompose
 			default:
 				return super.onOptionsItemSelected(item);
 		}
-	}
-	
-	public void onTweetComposed(String tweetText) {
-//		restClient.postNewTweet(tweetText, null, new JsonHttpResponseHandler() {
-//			@Override
-//			public void onSuccess(JSONObject tweetJson) {
-//				// below approach may not be correct as some other
-//				// twitter client might have added another tweet at
-//				// the same time which is not reflected here.
-////				tweetsAdapter.insert(Tweet.fromJSON(tweetJson), 0);
-////				tweetsAdapter.notifyDataSetChanged();
-////				lvTweets.smoothScrollToPosition(0);
-//			}
-//			
-//			@Override
-//			public void onFailure(Throwable e, String str) {
-//				Log.d("error", e.getMessage());
-//			}
-//		});
 	}
 	
 }
