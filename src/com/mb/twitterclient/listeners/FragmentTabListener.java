@@ -62,4 +62,8 @@ public class FragmentTabListener<T extends Fragment> implements TabListener {
 		// User selected the already selected tab. Usually do nothing.
 	}
 	
+	public Fragment getFragment() {
+		return mFragment;
+	}
+	
 }

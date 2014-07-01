@@ -104,6 +104,5 @@ public class MentionsTweetsFragment extends TweetsListFragment {
 
 		}
 	}
-
 	
 }

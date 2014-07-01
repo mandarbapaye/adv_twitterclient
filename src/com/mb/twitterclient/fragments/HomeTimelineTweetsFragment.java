@@ -105,6 +105,12 @@ public class HomeTimelineTweetsFragment extends TweetsListFragment {
 
 		}
 	}
+	
+	public void updateTimeline(Tweet tweet) {
+		tweetsAdapter.insert(tweet, 0);
+		tweetsAdapter.notifyDataSetChanged();
+		lvTweets.smoothScrollToPosition(0);
+	}
 
 
 }

@@ -28,6 +28,10 @@ import com.mb.twitterclient.models.Tweet;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class TweetAdapter extends ArrayAdapter<Tweet> {
+	
+	public interface OnTweetReplyInitiated {
+		public void replyToTweet(Tweet tweet);
+	}
 
 	public TweetAdapter(Context context, List<Tweet> tweets) {
 		super(context, 0, tweets);

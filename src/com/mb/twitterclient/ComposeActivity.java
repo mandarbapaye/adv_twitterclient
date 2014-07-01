@@ -1,6 +1,10 @@
 package com.mb.twitterclient;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,17 +13,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.activeandroid.util.Log;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.mb.twitterclient.models.Tweet;
 import com.mb.twitterclient.models.User;
+import com.mb.twitterclient.util.Constants;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class ComposeActivity extends Activity {
 	
+	TwitterRestClient restClient;
+	
 	ImageView ivNewTweetImage;
 	TextView tvNewTweetName;
 	TextView tvNewTweetScreenName;
-	
-	
 	EditText etComposeTweet;
 	TextView tvTweetCounter;
 	Button btnNewTweet;
@@ -49,6 +58,8 @@ public class ComposeActivity extends Activity {
 		tvNewTweetName.setText(user.getName());
 		tvNewTweetScreenName.setText("@" + user.getScreenName());
 		
+		restClient = TwitterApplication.getRestClient();
+		
 		setupHandlers();
 		
 		if (replyTo != null) {
@@ -74,6 +85,24 @@ public class ComposeActivity extends Activity {
 	}
 
 	public void sendTweet(View v) {
-		finish();
+		String replyText = etComposeTweet.getText().toString();
+		setProgressBarIndeterminateVisibility(true);
+		restClient.postNewTweet(replyText, replyTo, new JsonHttpResponseHandler() {
+
+			@Override
+			public void onSuccess(JSONObject tweetJson) {
+				Tweet newTweet = Tweet.fromJSON(tweetJson);
+				Intent data = new Intent();
+				data.putExtra(Constants.NEW_TWEET, newTweet);
+				setResult(RESULT_OK, data);
+			}
+			
+			@Override
+			public void onFinish() {
+				setProgressBarIndeterminateVisibility(false);
+				super.onFinish();
+				finish();
+			}
+		});
 	}
 }

@@ -3,6 +3,7 @@ package com.mb.twitterclient.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.activeandroid.ActiveAndroid;
+import com.mb.twitterclient.ComposeActivity;
 import com.mb.twitterclient.DetailViewActivity;
 import com.mb.twitterclient.R;
 import com.mb.twitterclient.TwitterApplication;
@@ -25,7 +27,7 @@ import com.mb.twitterclient.util.Constants;
 import eu.erikw.PullToRefreshListView;
 import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
-public class TweetsListFragment extends Fragment {
+public class TweetsListFragment extends Fragment implements TweetAdapter.OnTweetReplyInitiated {
 	
 	TwitterRestClient restClient;
 	
@@ -35,10 +37,10 @@ public class TweetsListFragment extends Fragment {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		restClient = TwitterApplication.getRestClient();
 		tweetsList = new ArrayList<Tweet>();
 		tweetsAdapter = new TweetAdapter(getActivity(), tweetsList);
-		super.onCreate(savedInstanceState);
 	}
 
 	@Override
@@ -129,6 +131,31 @@ public class TweetsListFragment extends Fragment {
 //	    	}
 //	    	Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
 	    }
+	}
+	
+	public void replyToTweet(Tweet tweet) {
+		Intent i = new Intent(getActivity(), ComposeActivity.class);
+		startActivityForResult(i, Constants.TWEET_REPLY_FROM_FRAGMENT);
+	}
+	
+	// subclass fragments should override it to add custom
+	// checks on the tweet.
+	protected boolean updateListWithTweet(Tweet tweet) {
+		return true;
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == Constants.TWEET_REPLY_FROM_FRAGMENT &&
+			resultCode == Activity.RESULT_OK) {
+//			Tweet newTweet = (Tweet) data.getExtras().get(Constants.NEW_TWEET);
+//			if (newTweet != null && updateListWithTweet(newTweet)) {
+//				tweetsAdapter.insert(newTweet, 0);
+//				tweetsAdapter.notifyDataSetChanged();
+//				lvTweets.smoothScrollToPosition(0);
+//			}
+			loadNewerTweets();
+		}
 	}
 	
 }

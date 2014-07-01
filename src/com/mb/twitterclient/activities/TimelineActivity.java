@@ -1,9 +1,12 @@
 package com.mb.twitterclient.activities;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mb.twitterclient.ComposeActivity;
@@ -18,17 +22,20 @@ import com.mb.twitterclient.ProfileActivity;
 import com.mb.twitterclient.R;
 import com.mb.twitterclient.TwitterApplication;
 import com.mb.twitterclient.TwitterRestClient;
-import com.mb.twitterclient.fragments.ComposeTweetFragment;
 import com.mb.twitterclient.fragments.ComposeTweetFragment.OnTweetComposedListener;
 import com.mb.twitterclient.fragments.HomeTimelineTweetsFragment;
 import com.mb.twitterclient.fragments.MentionsTweetsFragment;
+import com.mb.twitterclient.fragments.TweetsListFragment;
 import com.mb.twitterclient.listeners.FragmentTabListener;
+import com.mb.twitterclient.models.Tweet;
+import com.mb.twitterclient.util.Constants;
 import com.mb.twitterclient.util.Util;
 
 public class TimelineActivity extends FragmentActivity implements OnTweetComposedListener {
 	
 	TwitterRestClient restClient;
 	Tab homeTab, mentionsTab;
+	Map<String, FragmentTabListener<? extends TweetsListFragment>> tabListener; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +85,22 @@ public class TimelineActivity extends FragmentActivity implements OnTweetCompose
 //		ComposeTweetFragment composeTweetFragment = ComposeTweetFragment.newInstance(null);
 //		composeTweetFragment.show(getFragmentManager(), "ComposeTweet");
 		Intent i = new Intent(this, ComposeActivity.class);
-		startActivity(i);
+		startActivityForResult(i, Constants.TWEET_REPLY_FROM_ACTIONBAR);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == Constants.TWEET_REPLY_FROM_ACTIONBAR &&
+			resultCode == Activity.RESULT_OK) {
+			Tweet newTweet = (Tweet) data.getExtras().get(Constants.NEW_TWEET);
+			if (newTweet != null) {
+				Toast.makeText(this, "New Tweet: " + newTweet.getBody(), Toast.LENGTH_LONG).show();
+			
+//				tweetsAdapter.insert(newTweet, 0);
+//				tweetsAdapter.notifyDataSetChanged();
+//				lvTweets.smoothScrollToPosition(0);
+			}
+		}
 	}
 	
 	public void onProfileClicked() {
@@ -102,22 +124,22 @@ public class TimelineActivity extends FragmentActivity implements OnTweetCompose
 	}
 	
 	public void onTweetComposed(String tweetText) {
-		restClient.postNewTweet(tweetText, null, new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(JSONObject tweetJson) {
-				// below approach may not be correct as some other
-				// twitter client might have added another tweet at
-				// the same time which is not reflected here.
-//				tweetsAdapter.insert(Tweet.fromJSON(tweetJson), 0);
-//				tweetsAdapter.notifyDataSetChanged();
-//				lvTweets.smoothScrollToPosition(0);
-			}
-			
-			@Override
-			public void onFailure(Throwable e, String str) {
-				Log.d("error", e.getMessage());
-			}
-		});
+//		restClient.postNewTweet(tweetText, null, new JsonHttpResponseHandler() {
+//			@Override
+//			public void onSuccess(JSONObject tweetJson) {
+//				// below approach may not be correct as some other
+//				// twitter client might have added another tweet at
+//				// the same time which is not reflected here.
+////				tweetsAdapter.insert(Tweet.fromJSON(tweetJson), 0);
+////				tweetsAdapter.notifyDataSetChanged();
+////				lvTweets.smoothScrollToPosition(0);
+//			}
+//			
+//			@Override
+//			public void onFailure(Throwable e, String str) {
+//				Log.d("error", e.getMessage());
+//			}
+//		});
 	}
 	
 }
