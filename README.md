@@ -1,4 +1,4 @@
-Simple Twitter Client
+Advanced Twitter Client
 =====================
 
 This is an android application that allows the user to connect to Twitter and view her home-timeline, mentions-timeline, user-timeline, post new tweets and view tweets details. User can also click on any profile image and view the profile details of the corresponding user. Tweets are also saved to the local database for offline mode.
